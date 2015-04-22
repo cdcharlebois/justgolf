@@ -1,0 +1,104 @@
+<head>
+  <title>app</title>
+</head>
+
+<body>
+  <h1>Welcome to Meteor!</h1>
+  {{> listCourses}}
+  {{> createCourse}}
+</body>
+
+<template name="hello">
+  <button>Click Me</button>
+  <p>You've pressed the button {{counter}} times.</p>
+</template>
+
+<template name="listCourses">
+	<h1>Course List</h1>
+	{{#each courses}}
+		{{name}}
+	{{/each}}
+</template>
+
+<template name="createCourse">
+	<h1>{{courseName}}</h1>
+	<table>
+		<tr>
+			<th colspan="2"><input type="text" class="courseName" name="courseName" placeholder="Course Name" /></th>
+		</tr>
+		<tr>
+			<td>Hole 1</td>
+			<input type="text" class="par hole1" name="hole1par">
+		</tr>
+		<tr>
+			<td>Hole 2</td>
+			<input type="text" class="par hole2" name="hole2par">
+		</tr>
+		<tr>
+			<td>Hole 3</td>
+			<input type="text" class="par hole3" name="hole3par">
+		</tr>
+		<tr>
+			<td>Hole 4</td>
+			<input type="text" class="par hole4" name="hole4par">
+		</tr>
+		<tr>
+			<td>Hole 5</td>
+			<input type="text" class="par hole5" name="hole5par">
+		</tr>
+		<tr>
+			<td>Hole 6</td>
+			<input type="text" class="par hole6" name="hole6par">
+		</tr>
+		<tr>
+			<td>Hole 7</td>
+			<input type="text" class="par hole7" name="hole7par">
+		</tr>
+		<tr>
+			<td>Hole 8</td>
+			<input type="text" class="par hole8" name="hole8par">
+		</tr>
+		<tr>
+			<td>Hole 9</td>
+			<input type="text" class="par hole9" name="hole9par">
+		</tr>
+		<tr>
+			<td>Hole 10</td>
+			<input type="text" class="par hole10" name="hole10par">
+		</tr>
+		<tr>
+			<td>Hole 11</td>
+			<input type="text" class="par hole11" name="hole11par">
+		</tr>
+		<tr>
+			<td>Hole 12</td>
+			<input type="text" class="par hole12" name="hole12par">
+		</tr>
+		<tr>
+			<td>Hole 13</td>
+			<input type="text" class="par hole13" name="hole13par">
+		</tr>
+		<tr>
+			<td>Hole 14</td>
+			<input type="text" class="par hole14" name="hole14par">
+		</tr>
+		<tr>
+			<td>Hole 15</td>
+			<input type="text" class="par hole15" name="hole15par">
+		</tr>
+		<tr>
+			<td>Hole 16</td>
+			<input type="text" class="par hole16" name="hole16par">
+		</tr>
+		<tr>
+			<td>Hole 17</td>
+			<input type="text" class="par hole17" name="hole17par">
+		</tr>
+		<tr>
+			<td>Hole 18</td>
+			<input type="text" class="par hole18" name="hole18par">
+		</tr>
+		<button class="addCourse">Add</button>
+	</table>
+
+</template>
