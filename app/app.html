@@ -5,19 +5,142 @@
 <body>
   <h1>Welcome to Meteor!</h1>
   {{> listCourses}}
+  {{> enterScore }}
+  {{> scorecard}}
   {{> createCourse}}
 </body>
 
-<template name="hello">
-  <button>Click Me</button>
-  <p>You've pressed the button {{counter}} times.</p>
+<template name="enterScore">
+	Select a course: 
+	<select>
+		{{#each courses}}
+			<option value="{{_id}}" name="{{_id}}">{{name}}</option>
+		{{/each}}
+ 	</select>
 </template>
+<!--
+// need to find a way to pass parameters to a template.
+// display the scorecard for the selected course.
+-->
+<template name="scorecard">
+	<table>
+		<tr>
+			<th>Oakley Country Club</th>
+		</tr>
+		<tr>
+			<td>Hole</td>
+			<td>1</td>
+			<td>2</td>
+			<td>3</td>
+			<td>4</td>
+			<td>5</td>
+			<td>6</td>
+			<td>7</td>
+			<td>8</td>
+			<td>9</td>
+			<td>OUT</td>
+			<td>10</td>
+			<td>11</td>
+			<td>12</td>
+			<td>13</td>
+			<td>14</td>
+			<td>15</td>
+			<td>16</td>
+			<td>17</td>
+			<td>18</td>
+			<td>IN</td>
+			<td>TOTAL</td>
+		</tr>
+		<tr>
+			<td>Par</td>
+			<td>4</td>
+			<td>4</td>
+			<td>3</td>
+			<td>5</td>
+			<td>4</td>
+			<td>5</td>
+			<td>3</td>
+			<td>4</td>
+			<td>4</td>
+			<td>36</td>
+			<td>5</td>
+			<td>4</td>
+			<td>3</td>
+			<td>5</td>
+			<td>3</td>
+			<td>3</td>
+			<td>4</td>
+			<td>4</td>
+			<td>4</td>
+			<td>35</td>
+			<td>71</td>
+		</tr>
+		<tr>
+			<td>Score</td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+			<td><input type="text"></td>
+		</tr>
+	</table>
+</template>
+
 
 <template name="listCourses">
 	<h1>Course List</h1>
-	{{#each courses}}
-		{{name}}
-	{{/each}}
+	<ul>
+		{{#each courses}}
+			<li>
+				{{name}} <br>
+				<table>
+					<tr>
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+						<td>4</td>
+						<td>5</td>
+						<td>6</td>
+						<td>7</td>
+						<td>8</td>
+						<td>9</td>
+						<td>10</td>
+						<td>11</td>
+						<td>12</td>
+						<td>13</td>
+						<td>14</td>
+						<td>15</td>
+						<td>16</td>
+						<td>17</td>
+						<td>18</td>
+					</tr>
+					<tr>
+						{{#each holes}}
+							<td>{{this}}</td>
+						{{/each}}
+					</tr>
+				</table>
+			</li>
+			
+		{{/each}}	
+	</ul>
+	
 </template>
 
 <template name="createCourse">
