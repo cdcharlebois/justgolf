@@ -1,13 +1,17 @@
 <head>
   <title>app</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
+<div class="container">
+	<h1>Welcome to Meteor!</h1>
   {{> listCourses}}
   {{> enterScore }}
   {{> scorecard}}
-  {{> createCourse}}
+  {{> createCourse}}	
+</div>
+  
 </body>
 
 <template name="enterScore">
@@ -25,7 +29,7 @@
 <template name="scorecard">
 	<table>
 		<tr>
-			<th>Oakley Country Club</th>
+			<th colspan="21">Oakley Country Club</th>
 		</tr>
 		<tr>
 			<td>Hole</td>
