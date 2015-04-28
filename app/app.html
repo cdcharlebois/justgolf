@@ -1,26 +1,43 @@
 <head>
   <title>app</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
 </head>
 
 <body>
+
 <div class="container">
-	<h1>Welcome to Meteor!</h1>
-  {{> listCourses}}
-  {{> enterScore }}
-  {{> scorecard}}
-  {{> createCourse}}	
-</div>
+	<!-- <h1>Welcome to Meteor!</h1> -->
+<!-- 	<h2>1. Pick a course</h2>
+  		{{> listCourses}}
+  		{{> enterScore }}
+  {{> createCourse}} -->
   
+  	{{> pickCourse}}
+  	{{> enterScore}}
+  <!-- {{>createCourse}} -->
+</div>
 </body>
 
-<template name="enterScore">
-	Select a course: 
-	<select>
+<template name="pickCourse">
+{{#if s_pickingCourse}}
+	<div class="row">	
+		<h1>Pick a Course</h1>
+	</div>	
+	<p>Select a course: </p>
+	<select class="courses">
+		<option selected disabled>pick</option>
 		{{#each courses}}
 			<option value="{{_id}}" name="{{_id}}">{{name}}</option>
 		{{/each}}
- 	</select>
+	</select>
+	<button class="pickCourse-go">Next</button>
+	{{/if}}
+</template>
+
+<template name="enterScore">
+{{#if s_enteringScore}}
+<h1>Enter your score for {{courseName}}</h1>
+{{>scorecard}}
+{{/if}}
 </template>
 <!--
 // need to find a way to pass parameters to a template.

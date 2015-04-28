@@ -1,7 +1,10 @@
 // Global
 Courses = new Mongo.Collection('courses');
+Scores  = new Mongo.Collection('scores');
 
 if (Meteor.isClient) {
+  // default state
+  Session.set('s_pickingCourse', true);
   // counter starts at 0
   // Session.setDefault('counter', 0);
 
@@ -46,10 +49,35 @@ if (Meteor.isClient) {
       // console.log(pars);
     }
   });
-
-  Template.listCourses.helpers({
+  
+  ////////////////////////////////////////////////////////////////////////
+  //  PICK COURSE
+  ////////////////////////////////////////////////////////////////////////
+  Template.pickCourse.helpers({
     courses: function(){
       return Courses.find();
+    },
+    s_pickingCourse: function(){
+      return (Session.get('s_pickingCourse'));
+    }
+  })
+  Template.pickCourse.events({
+    'click .pickCourse-go': function(e,t){
+      Session.set('s_pickingCourse', false);
+      Session.set('courseName', Courses.findOne({_id: t.find('select').value}).name);
+      Session.set('s_enteringScore', true);
+    }
+  });
+
+  ////////////////////////////////////////////////////////////////////////
+  //  ENTER SCORE
+  ////////////////////////////////////////////////////////////////////////
+  Template.enterScore.helpers({
+    s_enteringScore: function(){
+      return Session.get('s_enteringScore');
+    },
+    courseName: function(){
+      return Session.get('courseName');
     }
   })
 }
