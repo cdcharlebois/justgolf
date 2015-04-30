@@ -4,7 +4,8 @@ Scores  = new Mongo.Collection('scores');
 
 if (Meteor.isClient) {
   // default state
-  Session.set('s_pickingCourse', true);
+  Session.set('s_isViewingMenu', true);
+  Session.set('totalScore', 0);
   // counter starts at 0
   // Session.setDefault('counter', 0);
 
@@ -51,21 +52,38 @@ if (Meteor.isClient) {
   });
   
   ////////////////////////////////////////////////////////////////////////
+  //  MENU
+  ////////////////////////////////////////////////////////////////////////
+  Template.menu.helpers({
+    s_isViewingMenu:function(){
+      return Session.get('s_isViewingMenu');
+    }
+  });
+  Template.menu.events({
+    'click .enterScore':function(){
+      Session.set('s_isViewingMenu', false);
+      Session.set('s_isPickingCourse', true);
+    }
+  })
+  
+  ////////////////////////////////////////////////////////////////////////
   //  PICK COURSE
   ////////////////////////////////////////////////////////////////////////
   Template.pickCourse.helpers({
     courses: function(){
       return Courses.find();
     },
-    s_pickingCourse: function(){
-      return (Session.get('s_pickingCourse'));
+    s_isPickingCourse: function(){
+      return (Session.get('s_isPickingCourse'));
     }
   })
   Template.pickCourse.events({
     'click .pickCourse-go': function(e,t){
-      Session.set('s_pickingCourse', false);
-      Session.set('courseName', Courses.findOne({_id: t.find('select').value}).name);
-      Session.set('s_enteringScore', true);
+      Session.set('s_isPickingCourse', false);
+      var thisCourse = Courses.findOne({_id: t.find('select').value})
+      Session.set('courseName', thisCourse.name);
+      Session.set('courseId', thisCourse._id);
+      Session.set('s_isEnteringScore', true);
     }
   });
 
@@ -73,13 +91,62 @@ if (Meteor.isClient) {
   //  ENTER SCORE
   ////////////////////////////////////////////////////////////////////////
   Template.enterScore.helpers({
-    s_enteringScore: function(){
-      return Session.get('s_enteringScore');
+    s_isEnteringScore: function(){
+      return Session.get('s_isEnteringScore');
     },
     courseName: function(){
       return Session.get('courseName');
     }
-  })
+  });
+  Template.enterScore.events({
+    'click button':function(e,t){
+      Session.set('s_isEnteringScore', false);
+      var elems = t.findAll('.score'),
+          scores = [];
+      for (var i in elems)
+        scores.push(elems[i].value*1);
+      var newScore = {
+        course: Courses.findOne({_id:Session.get('courseId')}),
+        scores: scores, 
+        date: new Date()
+      };
+      console.log(newScore);
+      Scores.insert(newScore);
+      Session.set('s_isViewingMenu', true); 
+    }
+  });
+  ////////////////////////////////////////////////////////////////////////
+  //  SCORECARD
+  ////////////////////////////////////////////////////////////////////////
+  Template.scorecard.helpers({
+    course: function(){
+      return Courses.findOne({_id:Session.get('courseId')});
+    },
+    outScore: function(){
+      return Session.get('outScore');
+    },
+    inScore: function(){
+      return Session.get('inScore');
+    },
+    totalScore:function(){
+      return Session.get('outScore')+Session.get('inScore');
+    }
+  });
+  Template.scorecard.events({
+    'blur .score':function(e,t){
+      var elems = t.findAll('.score'),
+          front = 0,
+          back  = 0;
+      for (var i in elems){
+        if ( i < 9 )//front 9
+          front += elems[i].value*1;
+        else
+          back += elems[i].value*1;
+      }
+      Session.set( 'outScore', front );
+      Session.set( 'inScore', back );
+    }
+  });
 }
 
 if (Meteor.isServer) {

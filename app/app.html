@@ -1,5 +1,10 @@
 <head>
   <title>app</title>
+  <style>
+	  .score{
+		  width:1.6rem;
+	  }
+  </style>
 </head>
 
 <body>
@@ -10,7 +15,7 @@
   		{{> listCourses}}
   		{{> enterScore }}
   {{> createCourse}} -->
-  
+  	{{> menu}}
   	{{> pickCourse}}
   	{{> enterScore}}
   <!-- {{>createCourse}} -->
@@ -18,7 +23,7 @@
 </body>
 
 <template name="pickCourse">
-{{#if s_pickingCourse}}
+{{#if s_isPickingCourse}}
 	<div class="row">	
 		<h1>Pick a Course</h1>
 	</div>	
@@ -34,9 +39,10 @@
 </template>
 
 <template name="enterScore">
-{{#if s_enteringScore}}
+{{#if s_isEnteringScore}}
 <h1>Enter your score for {{courseName}}</h1>
 {{>scorecard}}
+<button>Enter Score</button>
 {{/if}}
 </template>
 <!--
@@ -46,7 +52,7 @@
 <template name="scorecard">
 	<table>
 		<tr>
-			<th colspan="21">Oakley Country Club</th>
+			<th colspan="21">{{course.name}}</th>
 		</tr>
 		<tr>
 			<td>Hole</td>
@@ -59,7 +65,6 @@
 			<td>7</td>
 			<td>8</td>
 			<td>9</td>
-			<td>OUT</td>
 			<td>10</td>
 			<td>11</td>
 			<td>12</td>
@@ -69,58 +74,46 @@
 			<td>16</td>
 			<td>17</td>
 			<td>18</td>
+			<td>OUT</td>
 			<td>IN</td>
 			<td>TOTAL</td>
 		</tr>
 		<tr>
 			<td>Par</td>
-			<td>4</td>
-			<td>4</td>
-			<td>3</td>
-			<td>5</td>
-			<td>4</td>
-			<td>5</td>
-			<td>3</td>
-			<td>4</td>
-			<td>4</td>
-			<td>36</td>
-			<td>5</td>
-			<td>4</td>
-			<td>3</td>
-			<td>5</td>
-			<td>3</td>
-			<td>3</td>
-			<td>4</td>
-			<td>4</td>
-			<td>4</td>
-			<td>35</td>
-			<td>71</td>
+			{{#each course.holes}}
+			<td>{{this}}</td>
+			{{/each}}
+			<td>out</td>
+			<td>in</td>
+			<td>total</td>
+			
 		</tr>
 		<tr>
 			<td>Score</td>
-			<td><input type="text"></td>
-			<td><input type="text"></td>
-			<td><input type="text"></td>
-			<td><input type="text"></td>
-			<td><input type="text"></td>
-			<td><input type="text"></td>
-			<td><input type="text"></td>
-			<td><input type="text"></td>
-			<td><input type="text"></td>
-			<td><input type="text"></td>
-			<td><input type="text"></td>
-			<td><input type="text"></td>
-			<td><input type="text"></td>
-			<td><input type="text"></td>
-			<td><input type="text"></td>
-			<td><input type="text"></td>
-			<td><input type="text"></td>
-			<td><input type="text"></td>
-			<td><input type="text"></td>
-			<td><input type="text"></td>
-			<td><input type="text"></td>
+			<td><input type="number" name="hole0" class="score hole0"></td>
+			<td><input type="number" name="hole1" class="score hole1"></td>
+			<td><input type="number" name="hole2" class="score hole2"></td>
+			<td><input type="number" name="hole3" class="score hole3"></td>
+			<td><input type="number" name="hole4" class="score hole4"></td>
+			<td><input type="number" name="hole5" class="score hole5"></td>
+			<td><input type="number" name="hole6" class="score hole6"></td>
+			<td><input type="number" name="hole7" class="score hole7"></td>
+			<td><input type="number" name="hole8" class="score hole8"></td>
+			<td><input type="number" name="hole9" class="score hole9"></td>
+			<td><input type="number" name="hole10" class="score hole10"></td>
+			<td><input type="number" name="hole11" class="score hole11"></td>
+			<td><input type="number" name="hole12" class="score hole12"></td>
+			<td><input type="number" name="hole13" class="score hole13"></td>
+			<td><input type="number" name="hole14" class="score hole14"></td>
+			<td><input type="number" name="hole15" class="score hole15"></td>
+			<td><input type="number" name="hole16" class="score hole16"></td>
+			<td><input type="number" name="hole17" class="score hole17"></td>
+			<td>{{outScore}}</td>
+			<td>{{inScore}}</td>
+			<td>{{totalScore}}</td>
 		</tr>
 	</table>
+	
 </template>
 
 
@@ -245,4 +238,12 @@
 		<button class="addCourse">Add</button>
 	</table>
 
+</template>
+
+<template name="menu">
+	{{#if s_isViewingMenu}}
+		<h1>Main Menu</h1>
+		<button class="createCourse">Create Course</button>
+		<button class="enterScore">Enter Score</button>
+	{{/if}}
 </template>
