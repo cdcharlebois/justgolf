@@ -32,6 +32,9 @@ if (Meteor.isClient) {
   Template.createCourse.helpers({
     courseName: function(){
       return Session.get('courseName') || "New Course";
+    },
+    s_isCreatingCourse: function(){
+      return Session.get('s_isCreatingCourse');
     }
   });
 
@@ -48,6 +51,9 @@ if (Meteor.isClient) {
       console.log(newCourse);
       Courses.insert(newCourse);
       // console.log(pars);
+      Session.set('s_isCreatingCourse', false);
+      Session.set('s_isViewingMenu', true);
+      
     }
   });
   
@@ -57,14 +63,22 @@ if (Meteor.isClient) {
   Template.menu.helpers({
     s_isViewingMenu:function(){
       return Session.get('s_isViewingMenu');
-    }
+    },
   });
   Template.menu.events({
     'click .enterScore':function(){
       Session.set('s_isViewingMenu', false);
       Session.set('s_isPickingCourse', true);
+    },
+    'click .createCourse':function(){
+      Session.set('s_isViewingMenu', false);
+      Session.set('s_isCreatingCourse', true);
+    },
+    'click .viewCourses':function(){
+      Session.set('s_isViewingMenu', false);
+      Session.set('s_isViewingCourses', true);
     }
-  })
+  });
   
   ////////////////////////////////////////////////////////////////////////
   //  PICK COURSE
@@ -146,6 +160,33 @@ if (Meteor.isClient) {
       Session.set( 'outScore', front );
       Session.set( 'inScore', back );
     }
+  });
+  
+  ////////////////////////////////////////////////////////////////////////
+  //  VIEW COURSES
+  ////////////////////////////////////////////////////////////////////////
+  Template.viewCourses.helpers({
+    s_isViewingCourses: function(){
+      return Session.get('s_isViewingCourses');
+    },
+    courses: function(){
+      return Courses.find();
+    }
+  });
+  Template.viewCourses.events({
+    'click .returnToMenu': function(){
+      Session.set('s_isViewingCourses', false);
+      Session.set('s_isViewingMenu', true);
+    }
+  });
+  
+  ////////////////////////////////////////////////////////////////////////
+  //  -- COURSE --
+  ////////////////////////////////////////////////////////////////////////
+  Template.course_listItem.events({
+   'click .delete': function(e, t){
+     Courses.remove(this._id);
+   }
   });
 }
 

@@ -18,7 +18,8 @@
   	{{> menu}}
   	{{> pickCourse}}
   	{{> enterScore}}
-  <!-- {{>createCourse}} -->
+  	{{> createCourse}}
+	{{> viewCourses}}
 </div>
 </body>
 
@@ -158,6 +159,7 @@
 </template>
 
 <template name="createCourse">
+	{{#if s_isCreatingCourse}}
 	<h1>{{courseName}}</h1>
 	<table>
 		<tr>
@@ -237,13 +239,30 @@
 		</tr>
 		<button class="addCourse">Add</button>
 	</table>
-
+		{{/if}}
 </template>
 
 <template name="menu">
 	{{#if s_isViewingMenu}}
 		<h1>Main Menu</h1>
 		<button class="createCourse">Create Course</button>
+		<button class="viewCourses">View Courses</button>
 		<button class="enterScore">Enter Score</button>
 	{{/if}}
+</template>
+
+<template name="viewCourses">
+	{{#if s_isViewingCourses}}
+	<h2>Current Courses</h2>
+		<ul>
+			{{#each courses}}
+				{{> course_listItem}}
+			{{/each}}	
+		</ul>
+		<button class="returnToMenu">Back</button>
+	{{/if}}
+</template>
+
+<template name="course_listItem">
+	<li>{{name}} &mdash; <button class="delete">&times;</button></li>
 </template>
